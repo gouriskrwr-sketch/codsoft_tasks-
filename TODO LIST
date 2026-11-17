@@ -1,0 +1,83 @@
+
+import tkinter as tk
+from tkinter import messagebox
+
+# Add task
+def add_task():
+    task = entry.get()
+
+    if task:
+        listbox.insert(tk.END, task)
+        entry.delete(0, tk.END)
+    else:
+        messagebox.showwarning("Warning", "Please enter a task")
+
+# Delete selected task
+def delete_task():
+    try:
+        selected = listbox.curselection()
+        listbox.delete(selected)
+    except:
+        messagebox.showwarning("Warning", "Select a task first")
+
+# Mark task as completed
+def complete_task():
+    try:
+        selected = listbox.curselection()
+        task = listbox.get(selected)
+        listbox.delete(selected)
+        listbox.insert(tk.END, "✓ " + task)
+    except:
+        messagebox.showwarning("Warning", "Select a task first")
+
+# Main window
+root = tk.Tk()
+root.title("To-Do List")
+root.geometry("400x450")
+root.config(bg="#e6f2ff")
+
+# Heading
+title = tk.Label(
+    root, text="MY TO-DO LIST",
+    font=("Arial", 20, "bold"),
+    bg="#e6f2ff"
+)
+title.pack(pady=15)
+
+# Task input
+entry = tk.Entry(root, font=("Arial", 14), width=25)
+entry.pack(pady=10)
+
+# Add button
+tk.Button(
+    root, text="Add Task",
+    command=add_task,
+    bg="green", fg="white",
+    width=15
+).pack(pady=5)
+
+# Task list
+listbox = tk.Listbox(
+    root, font=("Arial", 12),
+    width=35, height=12
+)
+listbox.pack(pady=15)
+
+# Complete button
+tk.Button(
+    root, text="Mark Completed",
+    command=complete_task,
+    bg="blue", fg="white",
+    width=15
+).pack(pady=5)
+
+# Delete button
+tk.Button(
+    root, text="Delete Task",
+    command=delete_task,
+    bg="red", fg="white",
+    width=15
+).pack(pady=5)
+
+# Run application
+root.mainloop()
